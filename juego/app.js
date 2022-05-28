@@ -5,6 +5,7 @@
 let i = 0,
     contenedor = document.querySelector('#contenedor'),
     especies = ["🦍","🦌","🐷","🐉","🐯","😽"];
+    //especies = ['img/imagen.png','img/imagen2.png','img/imagen3.png']
     console.log(especies);
 
  //podriamos acceder al contenedor por getElementById
@@ -13,7 +14,8 @@ let i = 0,
 let intervalo = setInterval(mover, 500);
 
 function mover(){
-    contenedor.innerHTML = '<span>'+ especies[i]+'</span>';
+    //contenedor.innerHTML = `<img src="${especies[i]}" alt="">`;
+    contenedor.innerHTML = '<span class="text-center">'+ especies[i]+'</span>';
     i++;
     if(i === especies.length){
         i = 0;
@@ -24,9 +26,11 @@ document.getElementById("btn-dispara").addEventListener("click", function(){
     clearInterval(intervalo);
     console.log(i);
     if( i === 4){
-        alert("🎉 Felicidades lo atrapaste");
+        miVentana.show();
+        //alert("🎉 Felicidades lo atrapaste");
     } else {
-        alert("😢 Estuviste cerca");
+        miVentana.show();
+        //alert("😢 Estuviste cerca");
     }
 });
 
@@ -35,3 +39,6 @@ document.getElementById("reiniciar").addEventListener("click", function(){
 });
 
 // Continuara ...
+
+const opciones = {};
+const miVentana = new bootstrap.Modal('#miVentana', opciones)
