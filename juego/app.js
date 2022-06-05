@@ -1,12 +1,11 @@
 /**
  * Desarrollaremos un juego en el que iran pasando X cantidad de animales y debemos mostrar un mensaje cuando el animal capturado sea un 🐉 Dragón
  */
-
+let miVentana;
 let i = 0,
     contenedor = document.querySelector('#contenedor'),
     especies = ["🦍","🦌","🐷","🐉","🐯","😽"];
     //especies = ['img/imagen.png','img/imagen2.png','img/imagen3.png']
-    console.log(especies);
 
  //podriamos acceder al contenedor por getElementById
  //let contenedor = document.getElementById('#contenedor');
@@ -23,22 +22,41 @@ function mover(){
 }
 
 document.getElementById("btn-dispara").addEventListener("click", function(){
+    let cabecera, 
+        mensajito;
     clearInterval(intervalo);
-    console.log(i);
     if( i === 4){
-        miVentana.show();
-        //alert("🎉 Felicidades lo atrapaste");
+        cabecera = 'GANASTE';
+        mensajito = '🎉 Felicidades lo atrapaste';
     } else {
-        miVentana.show();
-        //alert("😢 Estuviste cerca");
+        cabecera = 'FALLASTE';
+        mensajito = '😢 Estuviste cerca';
     }
+
+    cambiarModal(cabecera, mensajito);
+    miVentana.show();
 });
 
 document.getElementById("reiniciar").addEventListener("click", function(){
     location.reload();
 });
 
-// Continuara ...
-
 const opciones = {};
-const miVentana = new bootstrap.Modal('#miVentana', opciones)
+miVentana = new bootstrap.Modal('#miVentana', opciones);
+
+const miCartel = document.getElementById('miVentana');
+
+function cambiarModal(titulo = '', mensaje= ''){
+    console.log('->>> '+titulo);
+    const miTitulo = miCartel.querySelector('.modal-title');
+    miTitulo.textContent = titulo;
+
+    //let miMensaje = miCartel.document.getElementById('mi-mensaje');
+    const miMensaje = miCartel.querySelector('.modal-body span');
+    miMensaje.textContent = mensaje;
+}
+
+//evento disparado al abrir modal
+miCartel.addEventListener('show.bs.modal', e => {
+    //aqui dentro puedo hacer algo
+});
