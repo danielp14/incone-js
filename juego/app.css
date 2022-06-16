@@ -19,7 +19,14 @@ body{
 		background-position: 0% 50%;
 	}
 }
-
+@media (max-width:  768px) {
+	#miVentana{
+		padding-top: 45%;
+	}
+}
 #miVentana{
-    padding-top: 45%;
+	padding-top: 15%;
+}
+.container{
+	max-width: 1200px;
 }

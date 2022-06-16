@@ -24,11 +24,14 @@ function mover(){
 document.getElementById("btn-dispara").addEventListener("click", function(){
     let cabecera, 
         mensajito;
+
     clearInterval(intervalo);
     if( i === 4){
+        playSound(1);
         cabecera = 'GANASTE';
         mensajito = '🎉 Felicidades lo atrapaste';
     } else {
+        playSound(2);
         cabecera = 'FALLASTE';
         mensajito = '😢 Estuviste cerca';
     }
@@ -37,6 +40,27 @@ document.getElementById("btn-dispara").addEventListener("click", function(){
     miVentana.show();
 });
 
+function playSound(pista =''){
+    let soundtrack;
+    switch (pista) {
+        case 1:
+            soundtrack = 'gano';
+            break;
+        case 2:
+            soundtrack = 'perdio';
+            break
+        case 3:
+            soundtrack = 'vida';
+            break
+        default:
+            soundtrack = 'bonus';
+            break;
+    }
+
+    const rutaAudio = 'assets/sounds/';
+    const sonido = new Audio(`${rutaAudio}${soundtrack}.mp3`);
+    sonido.play();
+}
 document.getElementById("reiniciar").addEventListener("click", function(){
     location.reload();
 });
@@ -49,6 +73,7 @@ const miCartel = document.getElementById('miVentana');
 function cambiarModal(titulo = '', mensaje= ''){
     console.log('->>> '+titulo);
     const miTitulo = miCartel.querySelector('.modal-title');
+    console.log(typeof miTitulo);
     miTitulo.textContent = titulo;
 
     //let miMensaje = miCartel.document.getElementById('mi-mensaje');
@@ -59,4 +84,5 @@ function cambiarModal(titulo = '', mensaje= ''){
 //evento disparado al abrir modal
 miCartel.addEventListener('show.bs.modal', e => {
     //aqui dentro puedo hacer algo
+    //playSound(3);
 });
