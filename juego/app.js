@@ -9,7 +9,13 @@ let i = 0,
 
  //podriamos acceder al contenedor por getElementById
  //let contenedor = document.getElementById('#contenedor');
-
+ const sonidos = {
+    gana: 'assets/sounds/gano.mp3',
+    perdio: 'assets/sounds/perdio.mp3',
+    vida: 'assets/sounds/gano.mp3',
+    bonus: 'assets/sounds/gano.mp3'
+ }
+console.log(sonidos);
 let intervalo = setInterval(mover, 500);
 
 function mover(){
@@ -27,15 +33,16 @@ document.getElementById("btn-dispara").addEventListener("click", function(){
 
     clearInterval(intervalo);
     if( i === 4){
-        playSound(1);
+        const sonido = new Audio(sonidos.gana);
+        sonido.play();
         cabecera = 'GANASTE';
         mensajito = '🎉 Felicidades lo atrapaste';
     } else {
-        playSound(2);
+        const sonido = new Audio(sonidos.gana);
+        sonido.play();
         cabecera = 'FALLASTE';
         mensajito = '😢 Estuviste cerca';
     }
-
     cambiarModal(cabecera, mensajito);
     miVentana.show();
 });
