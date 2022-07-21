@@ -1,3 +1,22 @@
 #text-input{
     height: 8em;
 }
+#title-app{
+    color: white;
+    font-weight: 800;
+}
+.container-img{
+    margin: 1rem;
+}
+.container-img > img{
+    height: 8em;
+}
+.custom-loading{
+    display: none;
+    background-color: gray;
+    opacity: 0.8;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 3000;
+}
