@@ -11,12 +11,16 @@
 .container-img > img{
     height: 8em;
 }
-.custom-loading{
+#custom-loading{
+    background-color: #341f97;
+    bottom:0px;
     display: none;
-    background-color: gray;
-    opacity: 0.8;
-    width: 100vw;
-    height: 100vh;
+    left:0px;
+    opacity:0.9;
     position: fixed;
-    z-index: 3000;
+    right: 0px;
+    text-align: center;
+    top:0px;
+    vertical-align: middle;
+    z-index: 10000;
 }

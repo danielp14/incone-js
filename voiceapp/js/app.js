@@ -1,11 +1,15 @@
 ( function () {
     self = this;
     self.voice = null;
+    self.animation = null;
     // logica de eventos
     self.events = {
         initApplication: function () {
             console.log('arranco...');
             self.events.btnPlay();
+
+
+            
         },
         btnPlay: function (){
             document.getElementById('btn-speak').addEventListener('click', function () {
@@ -47,6 +51,15 @@
             const pronunciacion = new SpeechSynthesisUtterance(msg);
             pronunciacion.voice = self.voice;
             speechSynthesis.speak(pronunciacion);
+            //vamos a detectar el play
+            pronunciacion.onstart = function () {
+                console.log('empieza a hablar');
+                self.methods.openAnimation();
+            }
+
+            pronunciacion.onend = function () {
+                self.methods.closeAnimation();
+            }
 
         },
         getVoices: function (event, idioma = "es") {
@@ -59,7 +72,14 @@
                     self.methods.getVoices(event, idioma.substring(0,2))
                 }
             }
+        },
+        openAnimation: function () {
+            document.getElementById('custom-loading').style.display = 'block';
+        },
+        closeAnimation: function () {
+            document.getElementById('custom-loading').style.display = 'none';
         }
+        
     }
 
     self.events.initApplication();
