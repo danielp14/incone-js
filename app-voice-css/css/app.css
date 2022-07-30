@@ -1,0 +1,51 @@
+#text-input{
+    height: 8em;
+}
+#title-app{
+    color: white;
+    font-weight: 800;
+}
+.container-img{
+    margin: 1rem;
+}
+.container-img > img{
+    height: 8em;
+}
+#custom-loading{
+    background-color: #341f97;
+    bottom: 0px;
+    display: none;
+    left: 0px;
+    opacity: 0.9;
+    position: fixed;
+    right: 0px;
+    text-align: center;
+    top: 0px;
+    vertical-align: middle;
+    z-index : 10000;
+}
+#custom-loading img{
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+}
+/*Syles card-images*/
+#card-voice{
+    display: none;
+}
+
+/*footer-menu*/
+#footer-menu{
+    background-color: #341f97;
+    color: white;
+    padding: 1rem;
+}
+#footer-menu li{
+    list-style-type: none;
+}
+#footer-menu a{
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+}
