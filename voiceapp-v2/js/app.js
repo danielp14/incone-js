@@ -2,14 +2,25 @@
     self = this;
     self.voice = null;
     self.statusplay = 'off';
-    //para no repetir el mismo texto
-    const $ = selector => document.querySelector( selector );
+    let deferredPrompt = null;//install prompt
+    const customText = {
+        1: 'Necesito a los bomberos',
+        2: 'Necesito una ambulacia',
+        3: 'Quiero comprar entradas',
+        4: 'Me podria indicar esta calle'
+    }
+
     // logica de eventos
+    const $ = selector => document.querySelector( selector );
     self.events = {
         initApplication: function () {
             console.log('arranco...');
             self.events.btnPlay();
             self.events.btnClean();
+            self.events.btnInstall();
+            self.events.btnNavigate();
+            self.views.cardVoices();
+
             var instance = new SiriWave({
                 container: document.getElementById("custom-loading"),
                 width: 500,
@@ -40,9 +51,11 @@
                 lerpSpeed: 0.1, //lerp speed
             });
             instance.start();
+
         },
         btnPlay: function (){
             document.getElementById('btn-speak').addEventListener('click', function () {
+                this.disabled = true;
                 let msg = document.getElementById('text-input').value;
                 let statusPlay = 'ok';
                 //vamos a validar
@@ -64,24 +77,44 @@
         }, 
         btnClean: function (){
             $('#btn-clean').addEventListener('click', function () {
-                console.log('>>>');
                 $('#text-input').value = '';
             });
         },
-        nabigate: function (){
-            $('#btn-navigate').addEventListener('click', function () {
-                self.methods.navigate();
+        btnInstall: function (){
+            $('#btn-install').addEventListener('click', function () {
+                if (deferredPrompt) deferredPrompt.prompt();
+            });
+        },
+        navigate: function (link){
+            document.querySelectorAll('.section-app').forEach( elem => {
+                elem.style.display = 'none';
+            });
+            document.getElementById(link).style.display = 'block';
+        },
+        btnNavigate: function(){
+            let linksFooter = document.querySelectorAll('.link-section');
+            linksFooter.forEach(link => {
+                link.addEventListener('click', function (event) {
+                    self.events.navigate(event.target.getAttribute('data-link'));
+                });
             });
         }
     }
     //logica de las vistas
     self.views = {
-        
+        cardVoices: function(){
+            document.querySelectorAll('.container-pic').forEach( elem => {
+                elem.addEventListener('click', function (event) {
+                    let seleted = event.target.getAttribute('data-msj');
+                    self.methods.playCard(seleted);
+                }, false);
+            });
+        }
     }
     
     self.methods = {
         playSpeak: function ( msg ) {
-
+            console.log(msg);
             if ( !('speechSynthesis' in window) ){
                 console.log('Servicio de voz no disponible');
                 return;
@@ -101,6 +134,7 @@
             }
             //finalizo la reproduccion
             pronunciacion.onend = function(event) {
+                document.getElementById('btn-speak').disabled = false;
                 self.methods.closeAnimation();
             }
         },
@@ -120,8 +154,28 @@
         },
         closeAnimation: function () {
             document.getElementById('custom-loading').style.display = 'none';
+        },
+        playCard: function ( cardSelected ) {
+            self.methods.playSpeak(customText[cardSelected]);
         }
     }
 
     self.events.initApplication();
+
+     //registro el service worker
+    if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+        navigator.serviceWorker
+            .register("/serviceworker.js")
+            .then(res => console.log("service worker registrado"))
+            .catch(err => console.log("service worker no registrado", err))
+        })
+    }
+
+    /* evento para el boton instalar */
+    window.addEventListener("beforeinstallprompt", event => {
+        deferredPrompt = event;
+        console.log("deferredPrompt");
+        $("#btn-install").style.display = "block";
+    });
 }())
