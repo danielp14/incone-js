@@ -180,8 +180,31 @@
             self.escucha.lang = "es-AR";
             self.escucha.interimResults = false;
             self.escucha.continuous = true;
-
+            $('#text-output').value = '';
             console.log(self.escucha);
+            self.escucha.addEventListener('result', (event) =>{
+                let texto = '';
+                Array.from(event.results).forEach(
+                    resultado => Array.from(resultado).forEach(transcription => {
+                        texto += transcription.transcript;
+                    })
+                )
+                $('#text-output').value += texto; 
+            });
+
+            self.escucha.addEventListener('error', ()=>{
+                console.log('error al capturar');
+            })
+
+            self.escucha.addEventListener('end', ()=>{
+                console.log('termino de hablar');
+            })
+
+            self.escucha.addEventListener('nomatch', ()=>{
+                console.log('no reconocible');
+            })
+
+            self.escucha.start();
         }
     }
 
