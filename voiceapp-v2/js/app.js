@@ -2,6 +2,7 @@
     self = this;
     self.voice = null;
     self.statusplay = 'off';
+    self.escucha = null;
    
     let deferredPrompt = null;//install prompt
     const customText = {
@@ -20,6 +21,7 @@
             self.events.btnClean();
             self.events.btnInstall();
             self.events.btnNavigate();
+            self.events.btnMicro();
             self.views.cardVoices();
 
             var instance = new SiriWave({
@@ -99,6 +101,13 @@
                     self.events.navigate(event.target.getAttribute('data-link'));
                 });
             });
+        },
+        btnMicro: function(){
+            $('#btn-micro').addEventListener('click', (event) => {
+                event.preventDefault();
+                console.log('hable ahora');
+                self.methods.initSpeech();
+            });
         }
     }
     //logica de las vistas
@@ -158,6 +167,21 @@
         },
         playCard: function ( cardSelected ) {
             self.methods.playSpeak(customText[cardSelected]);
+        },
+        initSpeech: function (){
+            if((!webkitSpeechRecognition in window) ){
+                console.log('Servicio no disponible');
+                return;
+            }
+
+            $('#msj-notif').textContent  = 'Te escuchamos...';
+            $('#padre-msj').classList.remove('d-none');
+            self.escucha = new webkitSpeechRecognition();
+            self.escucha.lang = "es-AR";
+            self.escucha.interimResults = false;
+            self.escucha.continuous = true;
+
+            console.log(self.escucha);
         }
     }
 
