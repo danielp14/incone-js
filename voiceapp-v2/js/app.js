@@ -2,10 +2,11 @@
     self = this;
     self.voice = null;
     self.statusplay = 'off';
+   
     let deferredPrompt = null;//install prompt
     const customText = {
-        1: 'Necesito a los bomberos',
-        2: 'Necesito una ambulacia',
+        1: 'Necesito a los bomberos y policia',
+        2: 'Necesito una ambulacias',
         3: 'Quiero comprar entradas',
         4: 'Me podria indicar esta calle'
     }
@@ -163,19 +164,19 @@
     self.events.initApplication();
 
      //registro el service worker
-    if ("serviceWorker" in navigator) {
+    /*if ("serviceWorker" in navigator) {
         window.addEventListener("load", function() {
         navigator.serviceWorker
             .register("/serviceworker.js")
             .then(res => console.log("service worker registrado"))
             .catch(err => console.log("service worker no registrado", err))
         })
-    }
+    }*/
 
     /* evento para el boton instalar */
-    window.addEventListener("beforeinstallprompt", event => {
+    /*window.addEventListener("beforeinstallprompt", event => {
         deferredPrompt = event;
         console.log("deferredPrompt");
         $("#btn-install").style.display = "block";
-    });
+    });*/
 }())

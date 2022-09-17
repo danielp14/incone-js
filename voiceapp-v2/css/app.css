@@ -118,7 +118,7 @@
     --bs-btn-active-border-color: #{shade-color($bd-violet, 20%)};
 }
 
-#card-voice{
+#card-voice, #vtt{
   display: none;
 }
 #card-voice .col{
@@ -129,6 +129,9 @@
 .container-pic{
   cursor: pointer;
 }
-.section-app{
-  height: 100vh;
+header, footer{
+  height: 10vh;
+}
+main{
+  height: 80vh;
 }
