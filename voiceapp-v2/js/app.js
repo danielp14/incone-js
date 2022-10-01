@@ -174,6 +174,11 @@
                 return;
             }
 
+            //verficamos si se esta escuchando
+            if(self.escucha){
+                self.methods.stopSpeech();
+                return;
+            }
             $('#msj-notif').textContent  = 'Te escuchamos...';
             $('#padre-msj').classList.remove('d-none');
             self.escucha = new webkitSpeechRecognition();
@@ -181,7 +186,9 @@
             self.escucha.interimResults = false;
             self.escucha.continuous = true;
             $('#text-output').value = '';
+
             console.log(self.escucha);
+
             self.escucha.addEventListener('result', (event) =>{
                 let texto = '';
                 Array.from(event.results).forEach(
@@ -193,18 +200,28 @@
             });
 
             self.escucha.addEventListener('error', ()=>{
+                self.methods.stopSpeech();
                 console.log('error al capturar');
             })
 
             self.escucha.addEventListener('end', ()=>{
+                self.methods.stopSpeech();
                 console.log('termino de hablar');
             })
 
             self.escucha.addEventListener('nomatch', ()=>{
+                self.methods.stopSpeech();
                 console.log('no reconocible');
             })
 
             self.escucha.start();
+        },
+        stopSpeech: function () {
+            if(self.escucha){
+                self.escucha.stop();
+                self.escucha=null;
+            }
+
         }
     }
 
