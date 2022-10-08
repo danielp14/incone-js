@@ -132,13 +132,18 @@
                     </div>
                 </div>
                 <div class="section-app" id="vtt">
-                    <button id="btn-micro">
-                        <i class="fa-solid fa-microphone-lines"></i>
-                    </button>
-                    <div id="padre-msj" class="alert alert-warning d-none animate__heartBeat" role="alert">
+                    <div class="container-micro col-md-12 text-center">
+                        <button id="btn-micro">
+                            <i class="fa-solid fa-microphone-lines"></i>
+                        </button>
+                    </div>
+                    <div id="padre-msj" class="alert alert-warning invisible animate__heartBeat" role="alert">
                         <span id="msj-notif"></span>
                     </div>
-                    <textarea class="form-control" name="text-output" id="text-output"></textarea>
+                    <textarea class="form-control" name="text-output" id="text-output" readonly></textarea>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary  invisible" id="btn-dictado"> Escuchar</button>
+                    </div>
                 </div>
             </section>
         </div>

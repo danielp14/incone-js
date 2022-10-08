@@ -77,6 +77,26 @@
                     console.log('No reproducir porque '+ statusPlay)
                 }
             })
+
+            document.getElementById('btn-dictado').addEventListener('click', function () {
+                let msg = document.getElementById('text-output').value;
+                let statusPlay = 'ok';
+                //vamos a validar
+                if(msg === ''){
+                    statusPlay = 'vacio';
+                    self.statusplay === 'on'
+                }
+                if (speechSynthesis.speaking ){
+                    self.statusplay === 'on'
+                    statusPlay = 'playing';
+                } 
+                
+                if( self.statusplay === 'off') {
+                    self.methods.playSpeak(msg);
+                } else {
+                    console.log('No reproducir porque '+ statusPlay)
+                }
+            })
         }, 
         btnClean: function (){
             $('#btn-clean').addEventListener('click', function () {
@@ -103,10 +123,12 @@
             });
         },
         btnMicro: function(){
-            $('#btn-micro').addEventListener('click', (event) => {
+            $('#btn-micro').addEventListener('mousedown', (event) => {
                 event.preventDefault();
-                console.log('hable ahora');
                 self.methods.initSpeech();
+            });
+            $('#btn-micro').addEventListener('mouseup', (event) =>{
+                self.methods.stopSpeech();
             });
         }
     }
@@ -174,20 +196,13 @@
                 return;
             }
 
-            //verficamos si se esta escuchando
-            if(self.escucha){
-                self.methods.stopSpeech();
-                return;
-            }
             $('#msj-notif').textContent  = 'Te escuchamos...';
-            $('#padre-msj').classList.remove('d-none');
+            $('#padre-msj').classList.remove('invisible');
             self.escucha = new webkitSpeechRecognition();
             self.escucha.lang = "es-AR";
             self.escucha.interimResults = false;
             self.escucha.continuous = true;
             $('#text-output').value = '';
-
-            console.log(self.escucha);
 
             self.escucha.addEventListener('result', (event) =>{
                 let texto = '';
@@ -206,7 +221,6 @@
 
             self.escucha.addEventListener('end', ()=>{
                 self.methods.stopSpeech();
-                console.log('termino de hablar');
             })
 
             self.escucha.addEventListener('nomatch', ()=>{
@@ -220,6 +234,8 @@
             if(self.escucha){
                 self.escucha.stop();
                 self.escucha=null;
+                $('#padre-msj').classList.add('invisible');
+                $('#btn-dictado').classList.remove('invisible');
             }
 
         }
